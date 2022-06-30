@@ -99,7 +99,6 @@ export default {
     }
     .v-card__title{
         min-height: 128px;
-        font-size: 3em;
         align-items: center;
     }
     .v-card__actions {

@@ -1,12 +1,14 @@
 <template>
   <v-app>
-    <GlobalHeader />
+    <GlobalHeader @delete-all-book="deleteAllBook"/>
     <v-main>
       <v-container>
         <router-view
         @add-book-list="addBook"
         :books="books"
         @update-book-info="updateBook"
+        @remove-book="removeBook"
+        
         />
       </v-container>
     </v-main>
@@ -55,6 +57,16 @@ methods: {
     removeBook(x) {
         this.books.splice(x, 1);
         this.saveBooks();
+    },
+    deleteAllBook() {
+      const isDeleted = 'LocalStorageのデータを削除してもいいですか？'
+      if(window.confirm(isDeleted)){
+        localStorage.setItem(STORAGE_KEY, '');
+        localStorage.removeItem(STORAGE_KEY)
+        this.books=[];
+        window.location.reload()
+      }
+      this.saveBooks();
     },
     saveBooks() {
         const parsed = JSON.stringify(this.books);
